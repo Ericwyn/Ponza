@@ -69,28 +69,30 @@ func GetHostList() *[]Server {
 	return &HostList
 }
 
-// 获取单个网站数据
-func GetHost(host string, key string) (*Server, int64) {
+// 获取单个网站数据，返回的事，这个的数据，以及
+func GetServer(host string, key string) (*Server, *[]Server, int) {
 	if len(HostList) == 0 {
 		LoadData(&HostList)
 	}
-	for _, server := range HostList {
+	for i, server := range HostList {
 		if server.Host == host {
 			if server.Key == key {
-				return &server, 0
+				return &server, &HostList, i
 			}
-			return &Server{}, -2
+			return &Server{}, &HostList, -2
 
 		}
 	}
-	return &Server{}, -1
+	return &Server{}, &HostList, -1
 }
 
 // 刷新数据到本地
 func FlushData() {
+	fmt.Println("flush data")
 	for _, server := range HostList {
 		str, _ := json.MarshalIndent(server, "", "\t")
 		fileName := ".ponza/" + server.Host + ".json"
+		//fmt.Println(server.Host ,server,"有",len(server.Articles),"篇文章")
 		writeStringToFile(string(str), fileName)
 	}
 }
@@ -119,19 +121,51 @@ func GetArticle(host string, page string, key string) (*Article, int64) {
 	return &Article{}, -1
 }
 
-// 保存文章的评论
-func InsertComment(article *Article, comm string, name string, mail string, agent string) {
-	comment := Comment{
-		Comm:  comm,
-		Name:  name,
-		Agent: agent,
-		Time:  string(time.Now().Format("2006-01-02T15:04:05Z07:00")),
-		Mail:  mail,
+//// 保存文章的评论
+//func InsertComment(article *Article, comm string, name string, mail string, agent string) {
+//	comment := Comment{
+//		Comm:  comm,
+//		Name:  name,
+//		Agent: agent,
+//		Time:  string(time.Now().Format("2006-01-02T15:04:05Z07:00")),
+//		Mail:  mail,
+//	}
+//	comments := append(article.Comments, comment)
+//	article.Comments = comments
+//	// 刷新存储本地
+//	FlushData()
+//}
+
+// 插入评论
+func InsertComment(host string, page string, key string, comm string, name string, mail string, agent string) int {
+	for i, server := range HostList {
+		if server.Host == host {
+			if server.Key == key {
+				for j, article := range server.Articles {
+					if article.Page == page {
+						comment := Comment{
+							Comm:  comm,
+							Name:  name,
+							Agent: agent,
+							Time:  string(time.Now().Format("2006-01-02T15:04:05Z07:00")),
+							Mail:  mail,
+						}
+						article.Comments = append(article.Comments, comment)
+						HostList[i].Articles[j] = article
+						return 0
+					}
+				}
+				// 找不到对应的 page
+				return -3
+			} else {
+				// key 不正确
+				return -2
+			}
+
+		}
 	}
-	comments := append(article.Comments, comment)
-	article.Comments = comments
-	// 刷新存储本地
-	FlushData()
+	// host 不存在
+	return -1
 }
 
 func writeStringToFile(outputString string, fileName string) {

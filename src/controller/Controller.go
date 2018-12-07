@@ -10,11 +10,13 @@ import (
 // 获取某个页面的全部评论，按照时间顺序排列
 func GetComm(context *gin.Context) {
 	host := hostParse(context.GetHeader("host"))
+	if strings.TrimSpace(host) == "" {
+		host = hostParse(context.GetHeader("origin"))
+	}
 	page := context.PostForm("page")
 	key := context.PostForm("key")
 
 	article, i := storage.GetArticle(host, page, key)
-
 	if i != 0 {
 		switch i {
 		case -1:
@@ -46,30 +48,42 @@ func UploadComm(context *gin.Context) {
 	host := hostParse(context.GetHeader("host"))
 	page := context.PostForm("page")
 	key := context.PostForm("key")
+	if strings.TrimSpace(host) == "" {
+		host = hostParse(context.GetHeader("origin"))
+	}
 
 	comm := context.PostForm("comm")
 	name := context.PostForm("name")
 	mail := context.PostForm("mail")
 	agent := utils.GetUserAgent(context.GetHeader("user-agent"))
 
-	article, i := storage.GetArticle(host, page, key)
+	i := storage.InsertComment(host, page, key, comm, name, mail, agent)
 	// -1 为 host 不正确， -2 为 key 不正确，-3 为 page 不正确
 	if i != 0 {
 		switch i {
 		case -1:
-			context.JSON(4001, "host error")
+			context.JSON(200, map[string]string{
+				"code": "4001",
+			})
 			break
 		case -2:
-			context.JSON(4002, "key error")
+			context.JSON(200, map[string]string{
+				"code": "4002",
+			})
 			break
 		case -3:
-			context.JSON(4003, "page error")
+			context.JSON(200, map[string]string{
+				"code": "4003",
+			})
 			break
 		default:
-			context.JSON(4000, "ponza error, please see the log")
+			context.JSON(200, map[string]string{
+				"code": "4000",
+			})
 		}
 	} else {
-		storage.InsertComment(article, comm, name, mail, agent)
+		storage.FlushData()
+		context.JSON(200, "upload message success")
 	}
 }
 
@@ -78,35 +92,50 @@ func InitComm(context *gin.Context) {
 	host := hostParse(context.GetHeader("host"))
 	page := context.PostForm("page")
 	key := context.PostForm("key")
+	if strings.TrimSpace(host) == "" {
+		host = hostParse(context.GetHeader("origin"))
+	}
 
-	server, i := storage.GetHost(host, key)
+	server, _, i := storage.GetServer(host, key)
 	// -1 为 host 不正确， -2 为 key 不正确，-3 为 page 不正确
-	if i == 0 {
-		context.JSON(200, "page create success")
-	} else {
-		switch i {
-		case -1:
-			context.JSON(4001, "host error")
-			break
-		case -2:
-			context.JSON(4002, "key error")
-			break
+	if i >= 0 {
+		for _, article := range server.Articles {
+			if article.Page == page {
+				context.JSON(200, "page had create")
+			}
 		}
 		article := storage.Article{
 			Page:     page,
 			Comments: []storage.Comment{},
 		}
-		articles := append(server.Articles, article)
-		// 替换页面
-		server.Articles = articles
-		// 刷新数据
+		server.Articles = append(server.Articles, article)
+		context.JSON(200, "page create success")
+		storage.HostList[i] = *server
 		storage.FlushData()
+	} else {
+		switch i {
+		case -1:
+			context.JSON(200, map[string]string{
+				"code": "4001",
+			})
+			break
+		case -2:
+			context.JSON(200, map[string]string{
+				"code": "4002",
+			})
+			break
+		default:
+			context.JSON(200, map[string]string{
+				"code": "4000",
+			})
+		}
+
 	}
 }
 
 func hostParse(host string) string {
-	host = strings.Replace(host, "https", "", -1)
-	host = strings.Replace(host, "http", "", -1)
+	host = strings.Replace(host, "https://", "", -1)
+	host = strings.Replace(host, "http://", "", -1)
 	host = strings.Replace(host, "/", "", -1)
 	return host
 }
