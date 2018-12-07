@@ -42,16 +42,35 @@
     ponza.run('comments')                       // 配置你的评论列表所在的 dom 
 
 ## 后台数据库
-Ponza 依赖于 Mysql，数据库名称为 ponza，包含下面的表
-### comment 表
- - comment 评论内容
- - time 评论时间
- - nickname 昵称
- - mail 邮箱
- - userAgent 用户评论时候浏览器的 UserAgent
- - page 网站的 page
- - host 网站 host
- 
-### host 表
- - host 网站的 host
- - key 该网站请求时候需要的 key 
+Ponza 将全部数据都存储在本地的 json 文件当中，不需要依赖于数据库
+
+## 接口
+### 上传评论接口
+ - `/api/uploadComm`
+ - `POST`
+ - 参数
+    - `key` ponza 的 key
+    - `page` 页面的标记 
+    - `comm` 评论正文
+    - `name` 评论的昵称
+    - `mail` 邮箱
+
+### 获取评论接口
+ - `/api/getComm`
+ - `POST`
+ - 参数
+    - `key` ponza 的 key
+    - `page` 页面的标记
+
+### 评论初始化接口
+ - `api/initComm`
+ - `POST`
+ - 参数
+     - `key` ponza 的 key
+     - `page` 页面的标记
+
+### 错误码
+ - 4000     服务器错误
+ - 4001     host 错误
+ - 4002     key 错误
+ - 4003     page 错误
