@@ -62,3 +62,7 @@ func initHost(host string) string {
 	storage.FlushData()
 	return key
 }
+
+// TODO 分页功能
+// TODO 回复功能
+// TODO 点赞功能，对应的每个评论的 id 功能
