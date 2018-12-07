@@ -6,7 +6,6 @@ function ajax_post(url, params, success_callback, fail_callback) {
         for (let i = 0; i < params.length; i++) {
             formData.append(params[i][0],params[i][1])
         }
-        console.log("发送了 fd"+formData.length);
         xhr.send(formData);
     } else {
         xhr.send();
@@ -87,7 +86,7 @@ function getComm(){
                 initComm(getComm());
             }
             // 将数据显示出来
-            for (let i = 0; i < json.comment.length; i++) {
+            for (let i = json.comment.length-1; i >= 0;i--){
                 let comm = json.comment[i];
                 document.getElementById("ponza-comm-list").innerHTML
                     += bindComment(comm.name, comm.time, comm.agent, comm.comm);
@@ -130,7 +129,8 @@ function uploadComm(comm, name, mail){
         ],
         function (resp) {
             let json = JSON.parse(resp);
-            console.log(json);
+            // console.log(json);
+            getComm();
         },
         function (status) {
             console.log("error : "+status)
