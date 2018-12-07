@@ -55,6 +55,12 @@ func UploadComm(context *gin.Context) {
 	comm := context.PostForm("comm")
 	name := context.PostForm("name")
 	mail := context.PostForm("mail")
+	if len(mail) > 40 {
+		mail = mail[0:40]
+	}
+	if len(name) > 20 {
+		name = name[0:20]
+	}
 	agent := utils.GetUserAgent(context.GetHeader("user-agent"))
 
 	i := storage.InsertComment(host, page, key, comm, name, mail, agent)
@@ -83,7 +89,9 @@ func UploadComm(context *gin.Context) {
 		}
 	} else {
 		storage.FlushData()
-		context.JSON(200, "upload message success")
+		context.JSON(200, map[string]string{
+			"data": "upload message success",
+		})
 	}
 }
 
@@ -101,7 +109,10 @@ func InitComm(context *gin.Context) {
 	if i >= 0 {
 		for _, article := range server.Articles {
 			if article.Page == page {
-				context.JSON(200, "page had create")
+				context.JSON(200, map[string]string{
+					"data": "page had create",
+				})
+				return
 			}
 		}
 		article := storage.Article{
@@ -109,7 +120,9 @@ func InitComm(context *gin.Context) {
 			Comments: []storage.Comment{},
 		}
 		server.Articles = append(server.Articles, article)
-		context.JSON(200, "page create success")
+		context.JSON(200, map[string]string{
+			"data": "page create success",
+		})
 		storage.HostList[i] = *server
 		storage.FlushData()
 	} else {
