@@ -1,13 +1,15 @@
 # Ponza
 静态博客评论框架，灵感来自 Gitment
 
+[Example、示例网址](https://blog.meetwhy.com/blog/ponza-document.html)
+
 ## 使用
 
 ### 增加 key
 
     .ponza -k "blog.meetwhy.com"
     // 显示如下
-    key: b9df8d72b06f4f8399c71ab520600130 for host: blog.meetwhy.com
+    key: b9df8d72b06f4f8399c71ab520604320 for host: blog.meetwhy.com
     
 为项目新建一个 key，该 key 只允许使用在来自域名 `blog.meetwhy.com` 的访问
 
@@ -38,7 +40,7 @@
     Ponza("test",{                                       // 配置评论所在 dom
         page:window.location.pathname,                      // 配置页面标记
         server:"https://wx.meetwhy.com",                    // 配置服务器地址
-        key:"b9df8d72b06f4f8399c71ab520600130",             // 配置 key
+        key:"b9df8d72b06f4f8399c71ab520604320",             // 配置 key
     });
 
 ## 后台数据库
