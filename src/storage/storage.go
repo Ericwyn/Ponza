@@ -147,7 +147,7 @@ func InsertComment(host string, page string, key string, comm string, name strin
 							Comm:  comm,
 							Name:  name,
 							Agent: agent,
-							Time:  string(time.Now().Format("2006-01-02T15:04:05Z07:00")),
+							Time:  string(time.Now().Format("2006年01月02日 15:04:05")),
 							Mail:  mail,
 						}
 						article.Comments = append(article.Comments, comment)
