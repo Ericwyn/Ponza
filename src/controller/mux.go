@@ -4,9 +4,9 @@ import "github.com/gin-gonic/gin"
 
 // 设置 API 路由
 func initAPI(router *gin.Engine) {
-	router.POST("/getComm", GetComm)
-	router.POST("/uploadComm", UploadComm)
-	router.POST("/initComm", InitComm)
+	router.POST("api/getComm", GetComm)
+	router.POST("api/uploadComm", UploadComm)
+	router.POST("api/initComm", InitComm)
 
 }
 
