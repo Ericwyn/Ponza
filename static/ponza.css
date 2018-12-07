@@ -1,0 +1,196 @@
+body{
+    background: #f6f6f6;
+}
+
+.ponza-main {
+    color: #333;
+}
+.ponza-card {
+    position: relative;
+    border: 1px solid #CFD8DC;
+    border-radius: 0;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.ponza-card-title {
+    margin-bottom: 10px;
+}
+
+.ponza-card-body {
+
+}
+
+.ponza-card-like-btn {
+    float: right;
+}
+
+.ponza-card-like-icon {
+    vertical-align: middle;
+    height: 20px;
+}
+
+.ponza-editor{
+    border: 1px solid #CFD8DC;
+}
+
+.ponza-editor-nav {
+    height: 36px;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #CFD8DC;
+    /*background: #333333;*/
+}
+
+.ponza-editor-body {
+    /*padding: 20px;*/
+    margin: 1px 5px 1px 1px;
+}
+
+.ponza-editor-body textarea {
+    display: block;
+    width: 100%;
+    border: 10px;
+    min-height: 150px;
+    max-height: 500px;
+    resize: vertical;
+    max-width: 100%;
+    margin-right: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+    background-color: #fff;
+    color: #333;
+    vertical-align: middle;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    box-shadow: none;
+    overflow: visible;
+}
+.ponza-submit{
+    margin-top: 20px;
+}
+
+.ponza-editor-button {
+    margin-top: 10px;
+    float: right;
+    color: #fff;
+    background-color: #009688;
+    position: relative;
+    display: inline-block;
+    padding: 7px 13px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-size: 110% 110%;
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.ponza-editor-set-button {
+    float: right;
+    color: #fff;
+    background-color: #009688;
+    position: relative;
+    padding: 7px 13px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-size: 110% 110%;
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.ponza-copyright {
+    display: inline;
+    float: left;
+    margin-top: 10px;
+    margin-right: 10px;
+    padding-left: 10px;
+    color: #666;;
+}
+
+.ponza-copyright p{
+    display: inline;
+    margin-bottom: 20px;
+    text-align: right;
+    font-size: 14px;
+}
+
+.ponza-copyright-href {
+    display: inline;
+    color: #009688;
+}
+
+.ponza-copyright-href:hover {
+    text-decoration: underline;
+}
+
+.ponza-editor-input {
+    display: inline;
+    width: 100%;
+    resize: vertical;
+    max-width: 30%;
+    padding-left: 10px;
+    margin-right: 20px;
+    margin-top: 10px;
+    height: 30px;
+    font-size: 14px;
+    line-height: 1.6;
+    background-color: #fff;
+    color: #333;
+    vertical-align: middle;
+    border:1px solid #CFD8DC;
+    border-radius: 0;
+    outline: none;
+    box-shadow: none;
+    overflow: visible;
+}
+
+@keyframes fade-in {
+    0% {opacity: 0;}/*初始状态 透明度为0*/
+    40% {opacity: 0;}/*过渡状态 透明度为0*/
+    100% {opacity: 1;}/*结束状态 透明度为1*/
+}
+@-webkit-keyframes fade-in {/*针对webkit内核*/
+    0% {opacity: 0;}
+    40% {opacity: 0;}
+    100% {opacity: 1;}
+}
+.gradient-wrapper {
+    /*display: inline-block;*/
+    overflow: hidden;
+    animation:
+            wrapper-gradient 500ms linear,
+            fade-in 500ms linear;
+}
+
+.ponza-editor-error {
+    display: inline;
+    float: right;
+    margin-top: 5px;
+    margin-right: 10px;
+    padding-left: 10px;
+    font-size: 14px;
+    color: #666;;
+}
