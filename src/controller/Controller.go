@@ -146,6 +146,8 @@ func InitComm(context *gin.Context) {
 	}
 }
 
+// TODO 点赞接口
+
 func hostParse(host string) string {
 	host = strings.Replace(host, "https://", "", -1)
 	host = strings.Replace(host, "http://", "", -1)
