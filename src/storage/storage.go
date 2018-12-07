@@ -57,6 +57,7 @@ func LoadData(dataMap *[]Server) {
 		var server Server
 		json.Unmarshal([]byte(jsonStr), &server)
 		HostList = append(HostList, server)
+		fmt.Println("load data in", f.Name())
 	}
 }
 

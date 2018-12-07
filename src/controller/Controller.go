@@ -14,19 +14,28 @@ func GetComm(context *gin.Context) {
 	key := context.PostForm("key")
 
 	article, i := storage.GetArticle(host, page, key)
+
 	if i != 0 {
 		switch i {
 		case -1:
-			context.JSON(4001, "host error")
+			context.JSON(200, map[string]string{
+				"code": "4001",
+			})
 			break
 		case -2:
-			context.JSON(4002, "key error")
+			context.JSON(200, map[string]string{
+				"code": "4002",
+			})
 			break
 		case -3:
-			context.JSON(4003, "page error")
+			context.JSON(200, map[string]string{
+				"code": "4003",
+			})
 			break
 		default:
-			context.JSON(4000, "ponza error, please see the log")
+			context.JSON(200, map[string]string{
+				"code": "4000",
+			})
 		}
 	} else {
 		context.JSON(200, article)

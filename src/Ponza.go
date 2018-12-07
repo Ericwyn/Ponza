@@ -26,15 +26,17 @@ func main() {
 	}
 }
 func startPonzaServer() {
-	// 先载入本地的 json 数据
+
 	s := &http.Server{
-		Addr:           ":8080",
+		Addr:           ":2334",
 		Handler:        controller.NewMux(),
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
+
 	s.ListenAndServe()
+
 }
 
 // 初始化一个网站的存储 json，返回该网站的 host
