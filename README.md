@@ -6,8 +6,8 @@
 ### 增加 key
 
     .ponza -k "blog.meetwhy.com"
-    // 得到
-    key:hufe-fhufa32-129fhv-chaldf for host:blog.meetwhy.com
+    // 显示如下
+    key: b9df8d72b06f4f8399c71ab520600130 for host: blog.meetwhy.com
     
 为项目新建一个 key，该 key 只允许使用在来自域名 `blog.meetwhy.com` 的访问
 
@@ -20,9 +20,13 @@
 
 ### 配置反向代理
 将你的 ponza 服务域名反向代理到 localhost:2334，如果你的 caddy 配置示例如下
-
-
-    // TODO
+    
+    api.ponza.host.com {
+        proxy / localhost:2334 {    
+            transparent
+        }
+    }
+    
     
 ### 引入 Ponza 的 js
 
@@ -30,16 +34,11 @@
 
 ### 配置 
     
-    const ponza = new Ponza({
-      page: 'page-name',                        // 设置页面的标记，以便上传和读取评论
-      oauth: {
-        https: true                             //是否使用 https 访问
-        server: api.ponza.meetwhy.com           // ponza 服务的地址
-        token: 'hufe-fhufa32-129fhv-chaldf',    // 使用 .ponza -k "host" 获取的 key
-      }
-    })
-    
-    ponza.run('comments')                       // 配置你的评论列表所在的 dom 
+    Ponza("test",{                                       // 配置评论所在 dom
+        page:window.location.pathname,                      // 配置页面标记
+        server:"https://wx.meetwhy.com",                    // 配置服务器地址
+        key:"b9df8d72b06f4f8399c71ab520600130",             // 配置 key
+    });
 
 ## 后台数据库
 Ponza 将全部数据都存储在本地的 json 文件当中，不需要依赖于数据库
@@ -55,6 +54,9 @@ Ponza 将全部数据都存储在本地的 json 文件当中，不需要依赖�
     - `comm` 评论正文
     - `name` 评论的昵称
     - `mail` 邮箱
+ - 返回
+        
+        "upload message success"
 
 ### 获取评论接口
  - `/api/getComm`
@@ -62,7 +64,28 @@ Ponza 将全部数据都存储在本地的 json 文件当中，不需要依赖�
  - 参数
     - `key` ponza 的 key
     - `page` 页面的标记
-
+ - 返回
+    
+        {
+            "page": "/blog/ubuntu-bash-ch.html",
+            "comment": [
+                {
+                    "comm": "评论 : 1544173519984",
+                    "time": "2018-12-07T17:05:20+08:00",
+                    "name": "Ericwyn",
+                    "mail": "ericwyn.chen@gmail.com",
+                    "agent": "Ubuntu 18.04 上的 Chrome 71.0 浏览器"
+                },
+                {
+                    "comm": "评论 : 1544173530023",
+                    "time": "2018-12-07T17:05:30+08:00",
+                    "name": "Ericwyn",
+                    "mail": "ericwyn.chen@gmail.com",
+                    "agent": "Ubuntu 18.04 上的 Chrome 71.0 浏览器"
+                }
+            ]
+        }
+ 
 ### 评论初始化接口
 当评论接口或者上传接口返回 4003 时候代表页面的评论数据未创建，使用该接口创建该页面的数据配置
  - `api/initComm`
@@ -70,8 +93,15 @@ Ponza 将全部数据都存储在本地的 json 文件当中，不需要依赖�
  - 参数
      - `key` ponza 的 key
      - `page` 页面的标记
-
+    
+ - 返回
+    
+        "page create success"
+    
 ### 错误码
+
+       {"code":"4003"}
+
  - 4000     服务器错误
  - 4001     host 错误
  - 4002     key 错误
