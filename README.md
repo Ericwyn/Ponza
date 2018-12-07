@@ -28,8 +28,9 @@
     }
     
     
-### 引入 Ponza 的 js
+### 引入 Ponza 的 js 和 css
 
+    <link rel="stylesheet" href="ponza.css">
     <script src="js/ponza.js"></script>
 
 ### 配置 
