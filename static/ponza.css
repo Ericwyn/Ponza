@@ -4,6 +4,7 @@ body{
 
 .ponza-main {
     color: #333;
+    margin-top: 50px;
 }
 .ponza-card {
     position: relative;
@@ -33,6 +34,7 @@ body{
 
 .ponza-editor{
     border: 1px solid #CFD8DC;
+    width: 100%;
 }
 
 .ponza-editor-nav {
@@ -178,7 +180,6 @@ body{
     100% {opacity: 1;}
 }
 .gradient-wrapper {
-    /*display: inline-block;*/
     overflow: hidden;
     animation:
             wrapper-gradient 500ms linear,
@@ -188,9 +189,13 @@ body{
 .ponza-editor-error {
     display: inline;
     float: right;
-    margin-top: 5px;
+    margin-top: 10px;
     margin-right: 10px;
     padding-left: 10px;
     font-size: 14px;
     color: #666;;
+}
+
+.ponza-user-set {
+    width: 100%;
 }

@@ -55,8 +55,8 @@ function Ponza(domId,option){
 
         <div class="ponza-user-set gradient-wrapper">
             <div style="display: inline">
-                <input class="ponza-editor-input" id="ponza-input-name" placeholder="请输入您的昵称">
-                <input class="ponza-editor-input" id="ponza-input-mail" placeholder="请输入您的邮箱">
+                <input class="ponza-editor-input" id="ponza-input-name" placeholder="昵称">
+                <input class="ponza-editor-input" id="ponza-input-mail" placeholder="邮箱">
                 <button class="ponza-editor-button" id="ponza-submit-btn" onclick="submit()">提 交</button>
             </div>
         </div>
