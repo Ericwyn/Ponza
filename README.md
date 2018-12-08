@@ -1,9 +1,10 @@
 # Ponza
 静态博客评论框架，灵感来自 Gitment
 
-[Example、示例网址](https://blog.meetwhy.com/blog/ponza-document.html)
+[Example、示例网址](https://ericwyn.github.io/Ponza/static/index.html)
 
-## 使用
+# 使用
+## 后端启用
 
 ### 增加 key
 
@@ -28,12 +29,13 @@
             transparent
         }
     }
-    
+
+## 前端启用
     
 ### 引入 Ponza 的 js 和 css
 
-    <link rel="stylesheet" href="ponza.css">
-    <script src="js/ponza.js"></script>
+    <link rel="stylesheet" href="https://ericwyn.github.io/Ponza/static/ponza.css">
+    <script src="https://ericwyn.github.io/Ponza/static/ponza.js"></script>
 
 ### 配置 
     
