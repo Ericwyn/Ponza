@@ -2,27 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.9,  user-scalable=no">
     <title>Ponza Test</title>
-    <style>
-        .w-30p{
-            width: 30%;
-        }
-    </style>
 </head>
+<script>
+    let width;
+    window.onresize = setPadding;
+    function setPadding() {
+        width = document.body.offsetWidth;
+        if (width < 400){
+            setContainerPadding(0);
+        } else if (width < 600){
+            setContainerPadding(5);
+        } else if (width < 1024){
+            setContainerPadding(20);
+        } else if (width < 1440){
+            setContainerPadding(30);
+        }
+    }
+    function setContainerPadding(paddingSize) {
+        document.getElementById("container").style.paddingLeft = paddingSize+"%";
+        document.getElementById("container").style.paddingRight = paddingSize+"%";
+    }
+</script>
 <body>
-<div class="w-30p"></div>
 <div>
-    <div id="comments"></div>
+    <div id = "container">
+        <div style="padding: 10px">
+            <h1 style="font-weight: bold">Hello Ponza</h1>
+            <p>你可以在此测试 Ponza 评论框架的效果</p>
+            <p><a href="https://github.com/Ericwyn/Ponza">点击此处</a> 查看 Github 源码</p>
+        </div>
+        <div id="comments"></div>
+    </div>
 </div>
-<div class="w-30p"></div>
 </body>
 <script type="text/javascript" src="ponza.js"></script>
 <link rel="stylesheet" href="ponza.css">
 <script>
-    Ponza("comments",{                                       // 配置评论所在 dom
-        page:window.location.pathname,                      // 配置页面标记
-        server:"https://ponza.meetwhy.com",                    // 配置服务器地址
-        key:"c202a95222b3460b9e4710a47189fce1",             // 配置 key
+    setPadding();
+    Ponza("comments",{
+        page:window.location.pathname,
+        server:"https://ponza.meetwhy.com",
+        key:"c202a95222b3460b9e4710a47189fce1",
     });
 </script>
 </html>
