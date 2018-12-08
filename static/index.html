@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ponza Test</title>
+    <style>
+        .w-30p{
+            width: 30%;
+        }
+    </style>
+</head>
+<body>
+<div class="w-30p"></div>
+<div>
+    <div id="comments"></div>
+</div>
+<div class="w-30p"></div>
+</body>
+<script type="text/javascript" src="ponza.js"></script>
+<link rel="stylesheet" href="ponza.css">
+<script>
+    Ponza("comments",{                                       // 配置评论所在 dom
+        page:window.location.pathname,                      // 配置页面标记
+        server:"https://ponza.meetwhy.com",                    // 配置服务器地址
+        key:"c202a95222b3460b9e4710a47189fce1",             // 配置 key
+    });
+</script>
+</html>
