@@ -3,6 +3,7 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"storage"
+	"strconv"
 	"strings"
 	"utils"
 )
@@ -119,6 +120,7 @@ func InitComm(context *gin.Context) {
 			Page:     page,
 			Comments: []storage.Comment{},
 			Count:    0,
+			Like:     0,
 		}
 		server.Articles = append(server.Articles, article)
 		context.JSON(200, map[string]string{
@@ -147,7 +149,47 @@ func InitComm(context *gin.Context) {
 	}
 }
 
-// TODO 点赞接口
+// 点赞接口
+func likeArticle(context *gin.Context) {
+
+}
+
+func LikeComm(context *gin.Context) {
+	host := hostParse(context.GetHeader("host"))
+	page := context.PostForm("page")
+	key := context.PostForm("key")
+	comm := context.PostForm("comm")
+	id, err := strconv.Atoi(comm)
+	if err != nil {
+		context.JSON(200, map[string]string{
+			"code": "4000",
+			"data": err.Error(),
+		})
+	}
+	if strings.TrimSpace(host) == "" {
+		host = hostParse(context.GetHeader("origin"))
+	}
+	for i, server := range storage.HostList {
+		if server.Host == host && server.Key == key {
+			for j, article := range server.Articles {
+				if article.Page == page {
+					for k, comment := range article.Comments {
+						if comment.Id == id {
+							storage.HostList[i].Articles[j].Comments[k].Like++
+							storage.FlushData()
+							context.JSON(200, map[string]string{
+								"data": "like successful",
+							})
+						}
+					}
+				}
+			}
+		}
+	}
+	context.JSON(200, map[string]string{
+		"data": "like failed",
+	})
+}
 
 func hostParse(host string) string {
 	host = strings.Replace(host, "https://", "", -1)

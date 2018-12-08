@@ -24,6 +24,7 @@ type Article struct {
 	Page     string    `json:"page"`
 	Comments []Comment `json:"comment"`
 	Count    int       `json:"count"` // 相当于自增主键的标记
+	Like     int       `json:"like"`
 }
 
 // 存储具体的评论
@@ -34,6 +35,7 @@ type Comment struct {
 	Name  string `json:"name"`
 	Site  string `json:"site"`
 	Agent string `json:"agent"`
+	Like  int    `json:"like"`
 }
 
 // 存储数据，对数据进行处理

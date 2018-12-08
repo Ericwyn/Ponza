@@ -100,7 +100,19 @@ Ponza 将全部数据都存储在本地的 json 文件当中，不需要依赖�
  - 返回
     
         "page create success"
+
+### 评论点赞接口
+当评论接口或者上传接口返回 4003 时候代表页面的评论数据未创建，使用该接口创建该页面的数据配置
+ - `api/LikeComm`
+ - `POST`
+ - 参数
+     - `page` ponza 的 key
+     - `comm` 评论的标记id
+        
+ - 返回
     
+        "page create success"
+
 ### 错误码
 
        {"code":"4003"}

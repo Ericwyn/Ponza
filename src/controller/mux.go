@@ -13,6 +13,7 @@ func initAPI(router *gin.Engine) {
 	router.POST("api/getComm", GetComm)
 	router.POST("api/uploadComm", UploadComm)
 	router.POST("api/initComm", InitComm)
+	router.POST("api/likeComm", LikeComm)
 
 }
 
