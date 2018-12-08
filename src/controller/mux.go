@@ -1,8 +1,10 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"os"
 	"storage"
 )
 
@@ -28,9 +30,13 @@ func NewMux() *gin.Engine {
 
 	// 允许跨域
 	config := cors.DefaultConfig()
+	if len(originsList) == 0 {
+		fmt.Println(" Haven't set a key for any website yet, please ues '-k \"host\"' to set a key ")
+		os.Exit(0)
+	}
 	config.AllowOrigins = originsList
-	config.AllowMethods = []string{"*"}
-	config.AllowHeaders = []string{"*"}
+	config.AllowMethods = []string{"GET, OPTIONS, POST, PUT, DELETE"}
+	config.AllowHeaders = []string{"Access-Control-Allow-Origin", "Origin"}
 	route.Use(cors.New(config))
 
 	initAPI(route)
