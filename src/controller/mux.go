@@ -29,8 +29,8 @@ func NewMux() *gin.Engine {
 	// 允许跨域
 	config := cors.DefaultConfig()
 	config.AllowOrigins = originsList
-	config.AllowMethods = []string{"GET, OPTIONS, POST, PUT, DELETE"}
-	config.AllowHeaders = []string{"Access-Control-Allow-Origin", "Origin"}
+	config.AllowMethods = []string{"*"}
+	config.AllowHeaders = []string{"*"}
 	route.Use(cors.New(config))
 
 	initAPI(route)

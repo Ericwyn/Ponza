@@ -23,14 +23,16 @@ type Server struct {
 type Article struct {
 	Page     string    `json:"page"`
 	Comments []Comment `json:"comment"`
+	Count    int       `json:"count"` // 相当于自增主键的标记
 }
 
 // 存储具体的评论
 type Comment struct {
+	Id    int    `json:"id"`
 	Comm  string `json:"comm"`
 	Time  string `json:"time"`
 	Name  string `json:"name"`
-	Mail  string `json:"mail"`
+	Site  string `json:"site"`
 	Agent string `json:"agent"`
 }
 
@@ -137,20 +139,22 @@ func GetArticle(host string, page string, key string) (*Article, int64) {
 //}
 
 // 插入评论
-func InsertComment(host string, page string, key string, comm string, name string, mail string, agent string) int {
+func InsertComment(host string, page string, key string, comm string, name string, site string, agent string) int {
 	for i, server := range HostList {
 		if server.Host == host {
 			if server.Key == key {
 				for j, article := range server.Articles {
 					if article.Page == page {
 						comment := Comment{
+							Id:    article.Count + 1,
 							Comm:  comm,
 							Name:  name,
 							Agent: agent,
 							Time:  string(time.Now().Format("2006年01月02日 15:04:05")),
-							Mail:  mail,
+							Site:  site,
 						}
 						article.Comments = append(article.Comments, comment)
+						article.Count = article.Count + 1
 						HostList[i].Articles[j] = article
 						return 0
 					}

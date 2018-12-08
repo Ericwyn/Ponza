@@ -65,4 +65,6 @@ func initHost(host string) string {
 
 // TODO 分页功能
 // TODO 回复功能
-// TODO 点赞功能，对应的每个评论的 id 功能
+// TODO 评论点赞功能，对应的每个评论的 id 功能
+// TODO 页面点赞
+// TODO 过长折叠

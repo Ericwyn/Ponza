@@ -56,7 +56,7 @@ Ponza 将全部数据都存储在本地的 json 文件当中，不需要依赖�
     - `page` 页面的标记 
     - `comm` 评论正文
     - `name` 评论的昵称
-    - `mail` 邮箱
+    - `site` 评论者的网站
  - 返回
         
         "upload message success"

@@ -54,16 +54,16 @@ func UploadComm(context *gin.Context) {
 
 	comm := context.PostForm("comm")
 	name := context.PostForm("name")
-	mail := context.PostForm("mail")
-	if len(mail) > 40 {
-		mail = mail[0:40]
+	site := context.PostForm("site")
+	if len(site) > 40 {
+		site = site[0:40]
 	}
 	if len(name) > 20 {
 		name = name[0:20]
 	}
 	agent := utils.GetUserAgent(context.GetHeader("user-agent"))
 
-	i := storage.InsertComment(host, page, key, comm, name, mail, agent)
+	i := storage.InsertComment(host, page, key, comm, name, site, agent)
 	// -1 为 host 不正确， -2 为 key 不正确，-3 为 page 不正确
 	if i != 0 {
 		switch i {
@@ -118,6 +118,7 @@ func InitComm(context *gin.Context) {
 		article := storage.Article{
 			Page:     page,
 			Comments: []storage.Comment{},
+			Count:    0,
 		}
 		server.Articles = append(server.Articles, article)
 		context.JSON(200, map[string]string{

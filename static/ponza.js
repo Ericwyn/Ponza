@@ -55,7 +55,7 @@ function Ponza(domId,option){
         <div class="ponza-user-set gradient-wrapper">
             <div style="display: inline">
                 <input class="ponza-editor-input" id="ponza-input-name" placeholder="昵称">
-                <input class="ponza-editor-input" id="ponza-input-mail" placeholder="邮箱">
+                <input class="ponza-editor-input" id="ponza-input-site" placeholder="网址">
                 <button class="ponza-editor-button" id="ponza-submit-btn" onclick="submit()">提 交</button>
             </div>
         </div>
@@ -65,8 +65,8 @@ function Ponza(domId,option){
     if (localStorage.getItem("ponzaName") != null){
         document.getElementById("ponza-input-name").value = localStorage.getItem("ponzaName");
     }
-    if (localStorage.getItem("ponzaMail") != null){
-        document.getElementById("ponza-input-mail").value = localStorage.getItem("ponzaMail");
+    if (localStorage.getItem("ponzaSite") != null){
+        document.getElementById("ponza-input-site").value = localStorage.getItem("ponzaSite");
     }
 }
 
@@ -91,7 +91,7 @@ function getComm(){
                 for (let i = json.comment.length-1; i >= 0;i--){
                     let comm = json.comment[i];
                     document.getElementById("ponza-comm-list").innerHTML
-                        += bindComment(comm.name, comm.time, comm.agent, comm.comm);
+                        += bindComment(comm.name, comm.time, comm.agent, comm.comm, comm.site);
                 }
             }
         },
@@ -120,7 +120,7 @@ function initComm(callback){
 }
 
 // 上传一篇文章的评论
-function uploadComm(comm, name, mail){
+function uploadComm(comm, name, site){
     ajax_post(
         server+"/api/uploadComm",
         [
@@ -128,7 +128,7 @@ function uploadComm(comm, name, mail){
             ["page", page],
             ["comm", comm],
             ["name", name],
-            ["mail", mail],
+            ["site", site],
         ],
         function (resp) {
             let json = JSON.parse(resp);
@@ -141,10 +141,16 @@ function uploadComm(comm, name, mail){
 }
 
 // 绑定评论视图
-function bindComment(name, time, agent, comm) {
+function bindComment(name, time, agent, comm, site) {
+    if (site.trim() != ""){
+        if (!site.startsWith("https://") && !site.startsWith("http://")) {
+            site = "http://" + site;
+        }
+        site = "href=\""+site+"\""
+    }
     return `<div class="ponza-card gradient-wrapper">
                 <div class="ponza-card-title">
-                    <span style="font-weight: bold">${name}</span> 在 ${time} 的评论，来自 ${agent}
+                    <span style="font-weight: bold"><a ${site} >${name}</a></span> 在 ${time} 的评论，来自 ${agent}
                     <div class="ponza-card-like-btn">
                         <svg class="ponza-card-like-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><path d="M25 39.7l-.6-.5C11.5 28.7 8 25 8 19c0-5 4-9 9-9 4.1 0 6.4 2.3 8 4.1 1.6-1.8 3.9-4.1 8-4.1 5 0 9 4 9 9 0 6-3.5 9.7-16.4 20.2l-.6.5zM17 12c-3.9 0-7 3.1-7 7 0 5.1 3.2 8.5 15 18.1 11.8-9.6 15-13 15-18.1 0-3.9-3.1-7-7-7-3.5 0-5.4 2.1-6.9 3.8L25 17.1l-1.1-1.3C22.4 14.1 20.5 12 17 12z"></path></svg>
                         <span></span>
@@ -158,24 +164,27 @@ function bindComment(name, time, agent, comm) {
 function submit() {
     let comm = document.getElementById("ponza-input-comm").value;
     let name = document.getElementById("ponza-input-name").value;
-    let mail = document.getElementById("ponza-input-mail").value;
-    let reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+    let site = document.getElementById("ponza-input-site").value;
+    let reg = /^(?=^.{3,255}$)(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+(:\d+)*/;
     if (name.length > 20){
         name = name.substr(0,20);
     }
-    if (mail.length > 40){
-        mail = mail.substr(0,40);
+    if (site.length > 40){
+        site = site.substr(0,40);
     }
     if (name.trim() == ""){
         document.getElementById("ponza-editor-error").innerHTML="请输入昵称";
         return
     }
     localStorage.setItem("ponzaName",name);
-    if (!reg.test(mail)){
-        document.getElementById("ponza-editor-error").innerHTML="请输入正确的邮箱";
-        return
+    if (site.trim() != ""){
+        if (!reg.test(site)){
+            document.getElementById("ponza-editor-error").innerHTML="个人网址错误";
+            return
+        }
+        localStorage.setItem("ponzaSite",site);
     }
-    localStorage.setItem("ponzaMail",mail);
+
     if (comm.trim() == ""){
         document.getElementById("ponza-editor-error").innerHTML="无法提交空白评论";
         return
@@ -185,7 +194,7 @@ function submit() {
         document.getElementById("ponza-editor-error").innerHTML="请求过快，稍后再试";
         return
     }
-    uploadComm(comm,name,mail);
+    uploadComm(comm,name,site);
     localStorage.setItem("ponzaLastTime",Date.parse(new Date()));
     document.getElementById("ponza-input-comm").value = "";
 }
