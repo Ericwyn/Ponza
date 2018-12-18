@@ -54,8 +54,12 @@ func UploadComm(context *gin.Context) {
 	}
 
 	comm := context.PostForm("comm")
+	comm = utils.ReplaceCommXss(comm)
 	name := context.PostForm("name")
+	name = utils.ReplaceCommXss(name)
 	site := context.PostForm("site")
+	site = utils.ReplaceSiteXSS(site)
+
 	if len(site) > 40 {
 		site = site[0:40]
 	}
