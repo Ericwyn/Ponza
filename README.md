@@ -34,8 +34,8 @@
     
 ### 引入 Ponza 的 js 和 css
 
-    <link rel="stylesheet" href="https://ericwyn.github.io/Ponza/static/ponza.css">
-    <script src="https://ericwyn.github.io/Ponza/static/ponza.js"></script>
+    <link rel="stylesheet" href="https://ericwyn.github.io/Ponza/static/ponza.min.css">
+    <script src="https://ericwyn.github.io/Ponza/static/ponza.min.js"></script>
 
 ### 配置 
     
