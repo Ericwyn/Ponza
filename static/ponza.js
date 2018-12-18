@@ -108,7 +108,7 @@ function loadCommPage(pageNum) {
     for (let i=commData.comment.length-((pageNum-1)*pageShowNum)-1; i >= commData.comment.length-(pageNum*pageShowNum) && i >=0 ; i--){
         comm = commData.comment[i];
         document.getElementById("ponza-comm-list").innerHTML
-            += bindComment(comm.name, comm.time, comm.agent, comm.comm, "blog.meetwhy.com");
+            += bindComment(comm.name, comm.time, comm.agent, comm.comm, comm.site);
     }
 }
 
