@@ -12,13 +12,8 @@ function Ponza(domId,option){
     // 获取 scritp 文件
     document.getElementById(domId).innerHTML +=
         `<div class="ponza-main">
-        <!--这里放留言的列表-->
-        <div id="ponza-comm-list">
-
-        </div>
+        <div id="ponza-comm-list"></div>
         <div class="ponza-page-change ponza-page-change-box"></div>
-
-        <!--这里放留言的输入框-->
         <div class="ponza-editor gradient-wrapper">
             <div class="ponza-editor-nav">
                 <div class="ponza-copyright">
@@ -35,7 +30,7 @@ function Ponza(domId,option){
         </div>
 
         <div class="ponza-user-set gradient-wrapper">
-            <div style="display: inline">
+            <div class="ponza-display-inline">
                 <input class="ponza-editor-input" id="ponza-input-name" placeholder="昵称">
                 <input class="ponza-editor-input" id="ponza-input-site" placeholder="网址">
                 <button class="ponza-editor-button" id="ponza-submit-btn" onclick="submit()">提 交</button>
