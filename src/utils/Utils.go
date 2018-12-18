@@ -14,6 +14,7 @@ func GetUserAgent(userAgentFromHeader string) string {
 
 func ReplaceCommXss(input string) string {
 	input = strings.Replace(input, "&nbsp;", "{{{SPACE}}}", -1)
+	input = strings.Replace(input, "<br/>", "{{{BR}}}", -1)
 	input = strings.Replace(input, "&", "&amp;", -1)
 	input = strings.Replace(input, "<", "&lt;", -1)
 	input = strings.Replace(input, ">", "&gt;", -1)
@@ -21,6 +22,7 @@ func ReplaceCommXss(input string) string {
 	input = strings.Replace(input, "'", "&#x27;", -1)
 	input = strings.Replace(input, "/", "&#x2F;", -1)
 	input = strings.Replace(input, "{{{SPACE}}}", "&nbsp;", -1)
+	input = strings.Replace(input, "{{{BR}}}", "<br/>", -1)
 	return input
 }
 
