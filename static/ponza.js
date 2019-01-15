@@ -4,6 +4,8 @@ let key;
 let commData;
 const pageShowNum = 7;
 let pageNum;
+let regWebSite = /^(?=^.{3,255}$)(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+(:\d+)*/;
+let regMail = /^\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
 
 function Ponza(domId,option){
     page = option.page;
@@ -148,7 +150,7 @@ function uploadComm(comm, name, site){
 
 // 绑定评论视图
 function bindComment(name, time, agent, comm, site) {
-    if (site.trim() != ""){
+    if (!regMail.test(site) && !regWebSite.test(site) && site.trim() != "") {
         if (!site.startsWith("https://") && !site.startsWith("http://")) {
             site = "http://" + site;
         }
@@ -171,8 +173,6 @@ function submit() {
     let comm = document.getElementById("ponza-input-comm").value;
     let name = document.getElementById("ponza-input-name").value;
     let site = document.getElementById("ponza-input-site").value;
-    let regWebSite = /^(?=^.{3,255}$)(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+(:\d+)*/;
-    let regMail = /^\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
     if (name.length > 20){
         name = name.substr(0,20);
     }
