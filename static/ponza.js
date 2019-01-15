@@ -31,8 +31,8 @@ function Ponza(domId,option){
 
         <div class="ponza-user-set gradient-wrapper">
             <div class="ponza-display-inline">
-                <input class="ponza-editor-input" id="ponza-input-name" placeholder="昵称">
-                <input class="ponza-editor-input" id="ponza-input-site" placeholder="网址">
+                <input class="ponza-editor-input" id="ponza-input-name" placeholder="您的昵称">
+                <input class="ponza-editor-input" id="ponza-input-site" placeholder="您的个人网址或邮箱">
                 <button class="ponza-editor-button" id="ponza-submit-btn" onclick="submit()">提 交</button>
             </div>
         </div>
@@ -171,7 +171,8 @@ function submit() {
     let comm = document.getElementById("ponza-input-comm").value;
     let name = document.getElementById("ponza-input-name").value;
     let site = document.getElementById("ponza-input-site").value;
-    let reg = /^(?=^.{3,255}$)(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+(:\d+)*/;
+    let regWebSite = /^(?=^.{3,255}$)(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+(:\d+)*/;
+    let regMail = /^\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
     if (name.length > 20){
         name = name.substr(0,20);
     }
@@ -184,8 +185,8 @@ function submit() {
     }
     localStorage.setItem("ponzaName",name);
     if (site.trim() != ""){
-        if (!reg.test(site)){
-            document.getElementById("ponza-editor-error").innerHTML="个人网址错误";
+        if (!regWebSite.test(site) && !regMail.test(site)){
+            document.getElementById("ponza-editor-error").innerHTML="个人网址或邮箱错误";
             return
         }
         localStorage.setItem("ponzaSite",site);
