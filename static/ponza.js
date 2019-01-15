@@ -150,11 +150,17 @@ function uploadComm(comm, name, site){
 
 // 绑定评论视图
 function bindComment(name, time, agent, comm, site) {
-    if (!regMail.test(site) && !regWebSite.test(site) && site.trim() != "") {
+    if (regMail.test(site)) {
+        site = "href=\"mailto:"+site+"\""
+    } else if (regWebSite.test(site)) {
+        site = "href=\""+site+"\""
+    } else if (site.trim() != "") {
         if (!site.startsWith("https://") && !site.startsWith("http://")) {
             site = "http://" + site;
         }
         site = "href=\""+site+"\""
+    } else {
+        site = "";
     }
     return `<div class="ponza-card gradient-wrapper">
                 <div class="ponza-card-title">
