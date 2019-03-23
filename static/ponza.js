@@ -19,7 +19,7 @@ function Ponza(domId,option){
         <div class="ponza-editor gradient-wrapper">
             <div class="ponza-editor-nav">
                 <div class="ponza-copyright">
-                    <p >Comment system powered by <a class="ponza-copyright-href" href="https://github.com/Ericwyn/Ponza">Ponza</a></p>
+                    <p >Comment system powered by <a class="ponza-copyright-href" href="https://github.com/Ericwyn/Ponza"> Ponza</a></p>
                 </div>
                 <div class="ponza-editor-error" id="ponza-editor-error"></div>
             </div>
@@ -94,7 +94,7 @@ function getComm(){
             }
         },
         function (status) {
-            console.log("ponza get comment error : "+status)
+            console.log("ponza get comment error : "+status);
         }
     )
 }
@@ -122,7 +122,7 @@ function initComm(callback){
             callback();
         },
         function (status) {
-            console.log("error : "+status)
+            console.log("error : "+status);
         }
     )
 }
@@ -151,9 +151,9 @@ function uploadComm(comm, name, site){
 // 绑定评论视图
 function bindComment(name, time, agent, comm, site) {
     if (regMail.test(site)) {
-        site = "href=\"mailto:"+site+"\""
+        site = "href=\"mailto:"+site+"\"";
     } else if (regWebSite.test(site)) {
-        site = "href=\""+site+"\""
+        site = "href=\"http://"+site+"\"";
     } else if (site.trim() != "") {
         if (!site.startsWith("https://") && !site.startsWith("http://")) {
             site = "http://" + site;
@@ -172,7 +172,7 @@ function bindComment(name, time, agent, comm, site) {
                 </div>
                 <div class="ponza-card-body">
                     ${comm}
-                </div>`
+                </div>`;
 }
 
 function submit() {
