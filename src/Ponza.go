@@ -12,12 +12,21 @@ import (
 )
 
 var host = flag.String("k", "null", "add the key for host")
+var versionFlag = flag.Bool("v", false, "show version info")
+
+const version = "v1.0"
 
 func main() {
 	// 先载入数据
 	storage.LoadData(&storage.HostList)
 
 	flag.Parse()
+
+	if *versionFlag {
+		fmt.Println("Ponza_" + version)
+		return
+	}
+
 	if *host == "null" {
 		startPonzaServer()
 	} else {

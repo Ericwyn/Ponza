@@ -4,7 +4,12 @@
 [Example、示例网址](https://ericwyn.github.io/Ponza/static/index.html)
 
 # 使用
+注意：虽然说Ponza是一个静态博客评论框架，但是还是需要一个服务器后端，只是这样一个后端可以供给诸多不同的网站使用这样
+
+（如果觉得麻烦可以邮箱私戳我，试用我部署的服务～）
+
 ## 后端启用
+先从 Release 页面下载 Ponza 的服务器端二进制文件
 
 ### 增加 key
 
