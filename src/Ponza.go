@@ -17,8 +17,6 @@ var versionFlag = flag.Bool("v", false, "show version info")
 const version = "v1.0"
 
 func main() {
-	// 先载入数据
-	storage.LoadData(&storage.HostList)
 
 	flag.Parse()
 
@@ -26,6 +24,9 @@ func main() {
 		fmt.Println("Ponza_" + version)
 		return
 	}
+
+	// 先载入数据
+	storage.LoadData(&storage.HostList)
 
 	if *host == "null" {
 		startPonzaServer()
